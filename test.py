@@ -1,22 +1,27 @@
 def create_user_name():
     while True:
         first_name = input('输入姓氏（选填）: ')
-        if len(first_name) >= 8:
-            print('长度过长，请重新输入')
-            continue
-        else:
-            first_name = first_name.strip()
+        if first_name == '':
             break
+        else:
+            if ' ' in first_name:
+                print('姓氏中不能带空格')
+                continue
+            elif len(first_name) >= 8 and ' ' not in first_name:
+                print('长度过长，请重新输入')
+                continue
+            else:
+                break
 
     while True:
         last_name = input('输入名字:')
         if last_name == '':
             print('名字不能为空，请输入名字！')
             continue
-        elif len(last_name) >= 7:
+        elif len(last_name) >= 7 and  ' ' not in last_name:
             print('名字长度过长，请重新输入')
             continue
-        elif last_name.strip() == '':
+        elif ' ' in last_name:
             print('不能输入空白')
             continue
         else:
@@ -32,7 +37,7 @@ def create_user_name():
         user_name = user_name.title()
         return user_name
 
-def create_user_information():
+def create_user_information(b=None,a=None):
     alpbhaet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     numbers = ['0','1','2','3','4','5','6','7','8','9']
     gender_choose = ('男','女')
@@ -41,32 +46,32 @@ def create_user_information():
     mouth_number_3 = list(range(2,13,2))
     while True:
         year = input('请输入出生年份：')
+        if year == '':
+            print('年份不能为空')
+            continue
         for number in year:
             if number not in numbers:
                 b = False
                 break
-            else:
-                b = True
         if b == False:
             for value in year:
                 if value in alpbhaet:
                     a = True
                     break
-                else:
-                    a = False
-            if a == True:
+            if a == True and ' ' not in year:
                 print('不能输入字母')
+                a = None
+                b = None
                 continue
-            elif year == '':
-                print('年份不能为空')
-                continue
-            elif year.strip() == '':
-                print('不能输入空白')
+            elif ' ' in year:
+                print('不能输入空格')
+                b = None
                 continue
             else:
                 print('不支持的语言或符号')
+                b = None
                 continue
-        if b == True :
+        elif b == None :
             year = int(year)
             if year > 2026 or year < 1920:
                 print('请输入有效日期')
