@@ -181,7 +181,7 @@ def create_user_information(b=None,a=None,c=None):
 
     return year, month, day, gender
 #收集用户性别
-def create_user_account():
+def create_user_account(c=None):
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     alpbhaet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
@@ -192,6 +192,8 @@ def create_user_account():
             if value not in numbers and value not in alpbhaet and value not in alpbhaet_copy and value != '_':
                 c = True
                 break
+            else:
+                continue
         if account == '':
             print('账号不能为空')
             continue
@@ -208,15 +210,19 @@ def create_user_account():
 #创建账号
     while True:
         code = input('请创建一个密码')
-        if code == '':
-            print('密码不能为空')
-            continue
-        for value in account:
+        for value in code:
             if value not in numbers and value not in alpbhaet and value not in alpbhaet_copy and value != '_':
                 c = True
                 break
+            else:
+                continue
         if c == True:
             print('密码只能包含字母数字和下划线')
+            c = None
+            continue
+        elif code == '':
+            print('密码不能为空')
+            continue
         else:
             if len(code) < 6 or len(code) > 18:
                 print('密码长度限制')
