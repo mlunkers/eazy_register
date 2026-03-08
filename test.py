@@ -38,9 +38,9 @@ def create_user_name():
         return user_name
 #合并为用户名
 def create_user_information(b=None,a=None,c=None):
-    alpbhaet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-    alpbhaet_copy = [i.upper() for i in alpbhaet]
-    numbers = ['0','1','2','3','4','5','6','7','8','9']
+    alpbhaet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}
+    numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+    alpbhaet_copy = {i.upper() for i in alpbhaet}
     gender_choose = ('男','女')
     day_number = list(range(1,32))
     mouth_number_2 = list(range(1,13,2))
@@ -50,11 +50,9 @@ def create_user_information(b=None,a=None,c=None):
         if year == '':
             print('年份不能为空')
             continue
-        for number in year:
-            if number not in numbers:
-                b = False
-                break
-        if b == False:
+        try:
+            int(year)
+        except ValueError:
             for value in year:
                 if ' ' not in year and value not in alpbhaet and value not in alpbhaet_copy and value not in numbers:
                     c = True
@@ -62,7 +60,6 @@ def create_user_information(b=None,a=None,c=None):
             if c == True:
                 print('不支持的语言或符号')
                 c = None
-                b = None
                 continue
             else:
                 for value in year:
@@ -72,13 +69,11 @@ def create_user_information(b=None,a=None,c=None):
                 if a == True:
                     print('不能输入字母')
                     a = None
-                    b = None
                     continue
                 elif ' ' in year:
                     print('不能输入空格')
-                    b = None
                     continue
-        elif b == None :
+        else:
             year = int(year)
             if year > 2026 or year < 1920:
                 print('请输入有效日期')
@@ -91,11 +86,9 @@ def create_user_information(b=None,a=None,c=None):
         if month == '':
             print('月份不能为空')
             continue
-        for value in month:
-            if value not in numbers:
-                a = True
-                break
-        if a == True:
+        try:
+            int(month)
+        except ValueError:
             for value in month:
                 if ' ' not in month and value not in alpbhaet and value not in alpbhaet_copy and value not in numbers:
                     c = True
@@ -103,7 +96,6 @@ def create_user_information(b=None,a=None,c=None):
             if c == True:
                 print('未知的字符')
                 c = None
-                a = None
                 continue
             else:
                 for number in month:
@@ -112,14 +104,12 @@ def create_user_information(b=None,a=None,c=None):
                         break
                 if ' ' in month:
                     print('不能输入空格')
-                    a = None
                     continue
                 elif b == True:
                     print('不能输入字母')
-                    a = None
                     b = None
                     continue
-        elif a == None:
+        else:
             month = int(month)
             if month not in mouth_number_2 + mouth_number_3:
                 print('请输入有效月份')
@@ -132,18 +122,15 @@ def create_user_information(b=None,a=None,c=None):
         if day == '':
             print('出生日不能为空')
             continue
-        for value in day:
-            if value not in numbers:
-                a = False
-                break
-        if a == False:
+        try:
+            int(day)
+        except ValueError:
             for value in day:
                 if ' ' not in day and value not in alpbhaet and value not in alpbhaet_copy and value not in numbers:
                     c = True
                     break
             if c == True:
                 print('不能输入符号或语言')
-                a = None
                 c = None
                 continue
             else:
@@ -153,23 +140,21 @@ def create_user_information(b=None,a=None,c=None):
                         break
                 if b == True:
                     print('不能输入字母')
-                    a = None
                     b = None
                     continue
                 elif ' ' in day:
                     print('不能输入空格')
-                    a = None
                     continue
-        elif a == None:
-            day = int(day)
-        if month in mouth_number_2 and day not in day_number:
-            print('请输入有效日期')
-            continue
-        elif month in mouth_number_3 and day not in day_number[:-1]:
-            print('请输入有效日期')
-            continue
         else:
-            break
+            day = int(day)
+            if month in mouth_number_2 and day not in day_number:
+                print('请输入有效日期')
+                continue
+            elif month in mouth_number_3 and day not in day_number[:-1]:
+                print('请输入有效日期')
+                continue
+            else:
+                break
 #收集用户出生日
     while True:
         gender = input('请选择您的性别（男/女）')
@@ -182,9 +167,9 @@ def create_user_information(b=None,a=None,c=None):
     return year, month, day, gender
 #收集用户性别
 def create_user_account(c=None):
-    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    alpbhaet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-                'v', 'w', 'x', 'y', 'z']
+    numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+    alpbhaet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z'}
     alpbhaet_copy = [i.upper() for i in alpbhaet]
     while True:
         account = input('请创建一个账号：')
@@ -231,4 +216,31 @@ def create_user_account(c=None):
                 break
 #创建密码
     return account,code
-
+#添加到字典
+def create_user_dict(user_name, year, month, day, gender,account,code):
+    users = {}
+    users[user_name] = {}
+    users[user_name]['name'] = user_name
+    users[user_name]['Gender'] = gender
+    users[user_name]['birthday'] = f'{year}-{month}-{day}'
+    users[user_name]['account'] = account
+    users[user_name]['code'] = code
+    for v in users.values():
+        print(
+            f'name:{v["name"]}\nGender:{v["Gender"]}\nbirthday:{v["birthday"]}\naccount:{v["account"]}\ncode:{v["code"]}')
+    return users
+#登陆验证
+def login_verify(account,code,users,login = None):
+    if account == '' or code ==  '':
+        return print('不能输入为空')
+    else:
+        for k,v in users.items():
+            if account == v['account'] and code == v['code']:
+                login = True
+                break
+            else:
+                continue
+    if login == True:
+        return login
+    elif login == None:
+        return login
